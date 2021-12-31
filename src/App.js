@@ -11,27 +11,27 @@ function App() {
   async function fetchRes(url) {
     let res = await fetch(url)
     let data = await res.json();
-    // info_map = {}
+    const infoMap = new Map();
     if(data.next){  
         data.results.map((v) => {
           if(v.pilots.length !== 0){
             temp = vehicles;
-            //veh_name = vehicles.name
-            //tmp_sum=0
+            let vehName = v.name;
+            let tmpSum = 0;
             temp.push(v);
             v.pilots.forEach(e => {
               fetch(e)
                 .then(response => response.json())
                 .then(response => fetch(response.homeworld).then(response => response.json()))
-                .then(response => console.log(response))
-              //tmp_sum += response.populations  
-
+                .then(response => tmpSum += Number(response.population))
             });
             setVehicles(temp);
+            infoMap.set(`${vehName}`, tmpSum);
             // info_map[veh_name] = tmp_sum
           }
         })   
       fetchRes(data.next);
+      console.log(infoMap);
     } 
 }
   
