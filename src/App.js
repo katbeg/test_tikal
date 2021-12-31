@@ -5,36 +5,39 @@ import PopulationTable from './components/populationTable/PopulationTable';
 import PopulationChart from './components/populationChart/PopulationChart'
 
 function App() {
-//   let temp = [];
-//   const [pilots, setPilots] = useState([]);
+  let temp = [];
+  const [vehicles, setVehicles] = useState([]);
 
-//   async function fetchRes(url) {
-//     let res = await fetch(url)
-//     let data = await res.json();
-//     if(data.next){
-//       // setPilots([...pilots], [...data.results])
-//       // setPilots(pilots.flat)
-//       // setPilots([...pilots, ...data.results]);
-//       // setPilots(pilots.push(data.results));  
-//       temp.map((arr, i) => arr.concat(data.results[i]));
-//       // temp.push(data.results);
-//       // temp = unit;
-      
-//       fetchRes(data.next);
-//      } 
-//      //else {
-//     //   setPilots
-//     //   // setPilots(...pilots);
-//     // }
-//     // setPilots([...pilots, ...data.results]);
-//     // setPilots(data.results);
-// }
+  async function fetchRes(url) {
+    let res = await fetch(url)
+    let data = await res.json();
+    // info_map = {}
+    if(data.next){  
+        data.results.map((v) => {
+          if(v.pilots.length !== 0){
+            temp = vehicles;
+            //veh_name = vehicles.name
+            //tmp_sum=0
+            temp.push(v);
+            v.pilots.forEach(e => {
+              fetch(e)
+                .then(response => response.json())
+                .then(response => fetch(response.homeworld).then(response => response.json()))
+                .then(response => console.log(response))
+              //tmp_sum += response.populations  
+
+            });
+            setVehicles(temp);
+            // info_map[veh_name] = tmp_sum
+          }
+        })   
+      fetchRes(data.next);
+    } 
+}
   
-//   useEffect(() => {
-//     fetchRes('https://swapi.dev/api/people')
-//       // .then(temp.map((arr, i) => arr.concat(test1[i]))
-//       .then(setPilots(temp));
-//   }, [])
+  useEffect(() => {
+    fetchRes('https://swapi.dev/api/vehicles');
+    }, [])
 
 
 
@@ -54,7 +57,10 @@ function App() {
   return (
     <div className="App">
       {/* <PopulationTable/> */}
-      <PopulationChart/>
+      {/* <PopulationChart/> */}
+      {/* {
+        pilots && pilots.map((p) => <h1>{p.name}</h1>)
+      } */}
     </div>
   );
 }

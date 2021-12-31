@@ -27,7 +27,7 @@ export default function PopulationChart(){
                 {
                     planets && planets.map((p, index) => {
                         if(p.name === 'Tatooine' || p.name === 'Alderaan' || p.name === 'Naboo' || p.name === 'Bespin' || p.name === 'Endor') {
-                            <Bar
+                            return <Bar
                                 key={p.name}
                                 x={index * (itemWidth + itemMargin)}
                                 y={0}
