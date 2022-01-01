@@ -5,13 +5,10 @@ import Bar from "./Bar";
 
 export default function PopulationChart(){
     const [planets, setPlanets] = useState();
-    const [data, setData] = useState();
-    const itemWidth = 20
+    const itemWidth = 40;
 
   // Distance between each bar
     const itemMargin = 5
-
-
 
     useEffect(() => {
         fetch('https://swapi.dev/api/planets/', {method: 'GET'})
@@ -20,25 +17,24 @@ export default function PopulationChart(){
 
     }, []);
     
-     
     return(
         <>
-            <Chart width='500' height='300'>
+            <Chart width='700' height='300'>
                 {
                     planets && planets.map((p, index) => {
                         if(p.name === 'Tatooine' || p.name === 'Alderaan' || p.name === 'Naboo' || p.name === 'Bespin' || p.name === 'Endor') {
+                            let height = p.population/10000000;
                             return <Bar
-                                key={p.name}
-                                x={index * (itemWidth + itemMargin)}
-                                y={0}
-                                width={itemWidth}
-                                height={(p.population)}
-                            />
+                                    key={p.name}
+                                    name={p.name}
+                                    population = {p.population}
+                                    x={index * (itemWidth + itemMargin)}
+                                    y={0}
+                                    width={itemWidth}
+                                    height={height}
+                                    />
                         }
-                        <p>{p.name}</p>
-                    }
-
-                    )
+                    })
                 }
             </Chart>
         </>

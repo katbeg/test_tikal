@@ -6,7 +6,6 @@ export default function PopulationTable(props){
     // const [vehicleName, setVehicleName] = useState(props);
     // const [vehicleName, setVehicleName] = useState(props);
 
-    
     return(
         <>
             <table>
