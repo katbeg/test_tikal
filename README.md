@@ -1,3 +1,7 @@
+# About
+
+This project was created as a test task for ProCamp. It includes two parts which are demonstrating algoritmic and working with API skills.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
