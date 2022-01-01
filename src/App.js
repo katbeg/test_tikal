@@ -3,9 +3,11 @@ import { useEffect,
          useState } from 'react';
 import PopulationTable from './components/populationTable/PopulationTable';
 import PopulationChart from './components/populationChart/PopulationChart'
+import '../src/components/populationTable/PopulationTable.scss'
 
 function App() {
   const [vehicles, setVehicles] = useState([]);
+  const [biggest, setBiggest] = useState('');
 
   async function fetchRes(url) {
     let res = await fetch(url)
@@ -17,6 +19,11 @@ function App() {
     })
     if(data.next) fetchRes(data.next);
     countPopulation();
+    // let temp = vehicles;
+    // // console.log(temp);
+    // biggest = temp.reduce((acc, curr) => acc.sum > curr.sum ? acc : curr);
+    // // setBiggest(max);
+    // console.log(biggest)
 }
 
 function countPopulation(){
@@ -28,39 +35,22 @@ function countPopulation(){
           .then(response => fetch(response.homeworld))
           .then(response => response.json())
           .then(response => setVehicles(v.sum = vehSum+= Number(response.population)))
+          .then(setBiggest(vehicles.reduce((acc, curr) => acc.sum > curr.sum ? acc : curr)));
       })
     })
 }
 
   useEffect(() => {
     fetchRes('https://swapi.dev/api/vehicles');
-
-    // if(vehicles){
-        let temp = vehicles;
-        // temp = vehicles;
-        console.log(temp)
-
-        let max = vehicles.reduce((acc, curr) => acc.sum > curr.sum ? acc : curr);
-
-        console.log(max)
-        // console.log(temp)
-
-        // let maxSum = 0;
-
-        // temp.map(function(obj){     
-        //   if (obj.sum > maxSum) maxSum = obj.sum;    
-        // });
-        // console.log(maxSum)
-      // }
     }, [])
 
   return (
     <div className="App">
-      {/* <PopulationTable vehicles={vehicles}/> */}
-      {/* <PopulationChart/> */}
-      {/* {
-        pilots && pilots.map((p) => <h1>{p.name}</h1>)
-      } */}
+      {
+        biggest&& <PopulationTable name={biggest.name} pilots={biggest.pilots} sum={biggest.sum}/>
+      }
+
+      <PopulationChart/>
     </div>
   );
 }

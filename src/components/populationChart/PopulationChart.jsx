@@ -19,7 +19,7 @@ export default function PopulationChart(){
     
     return(
         <>
-            <Chart width='700' height='300'>
+            <Chart width={'500'} height='300'>
                 {
                     planets && planets.map((p, index) => {
                         if(p.name === 'Tatooine' || p.name === 'Alderaan' || p.name === 'Naboo' || p.name === 'Bespin' || p.name === 'Endor') {
@@ -28,6 +28,7 @@ export default function PopulationChart(){
                                     key={p.name}
                                     name={p.name}
                                     population = {p.population}
+                                    y={300 - height}
                                     x={index * (itemWidth + itemMargin)}
                                     y={0}
                                     width={itemWidth}
